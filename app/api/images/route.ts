@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 // GET /api/images
-export async function get_all() {
+export async function GET() {
     const images = await prisma.image.findMany({
         include: { album: true},
         orderBy: { createdAt: "desc"}
@@ -12,7 +12,7 @@ export async function get_all() {
 }
 
 // POST /api/images
-export async function add_one(req: Request) {
+export async function POST(req: Request) {
     const body = await req.json();
     const { title, filename, url, albumId } = body;
 

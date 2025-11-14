@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-// Get /an/api/images/[id]
+// Get /api/images/[id]
 // get one image by id
 export async function get_one(req: Request, { params } : { params : { id: string }}) {
     const image = await prisma.image.findUnique({
@@ -17,6 +17,7 @@ export async function get_one(req: Request, { params } : { params : { id: string
 }
 
 // PATCH /api/images/[id]
+// update one image by id
 export async function patch(req: Request, { params } : { params : { id: string }}) {
     const body = await req.json();
     const { title, albumId } = body;
@@ -32,6 +33,8 @@ export async function patch(req: Request, { params } : { params : { id: string }
     return NextResponse.json(updatedData);
 }
 
+// DELETE /api/images/[id]
+// delete one image by id
 export async function del_image(req: Request, { params }: { params: { id: string } }) {
     await prisma.image.delete({ where: { id: Number(params.id) } });
     return NextResponse.json({ success: true });

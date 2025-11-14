@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-
-export async function get_one_album(req: Request, { params } : { params : { id: string }}) {
+// GET /api/albums/[id]
+// Returns a specific album by ID with its associated images
+export async function GET(req: Request, { params } : { params : { id: string }}) {
     const album = await prisma.album.findUnique({
         where: { id: Number(params.id) },
         include: { images: true },
@@ -15,7 +16,9 @@ export async function get_one_album(req: Request, { params } : { params : { id: 
     return NextResponse.json(album);
 };
 
-export async function patch(req: Request, id: string) {
+// PATCH /api/albums/[id]
+// Updates a specific album by ID
+export async function PATCH(req: Request, id: string) {
     const albumId = Number(id);
 
     if (Number.isNaN(albumId)) {
@@ -30,8 +33,9 @@ export async function patch(req: Request, id: string) {
     return NextResponse.json(updatedData);
 }
 
-
-export async function del_album(req: Request, { params }: { params: { id: string } }) {
+// DELETE /api/albums/[id]
+// Deletes a specific album by ID
+export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   await prisma.album.delete({ where: { id: Number(params.id) } });
   return NextResponse.json({ success: true });
 }

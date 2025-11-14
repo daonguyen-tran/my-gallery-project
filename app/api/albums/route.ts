@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 // GET /api/albums
 // Returns a list of albums with their associated images
-export async function get_all() {
+export async function GET() {
   const albums = await prisma.album.findMany({
     include: { images: true },
     orderBy: { createdAt: "desc" },
@@ -14,7 +14,7 @@ export async function get_all() {
 
 // POST /api/albums
 // Creates a new album
-export async function add_one(req: Request) {
+export async function POST(req: Request) {
   const { name } = await req.json();
 
   if (!name) {
