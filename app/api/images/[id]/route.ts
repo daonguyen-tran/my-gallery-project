@@ -1,11 +1,13 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-// Get /api/images/[id]
-// get one image by id
-export async function get_one(req: Request, { params } : { params : { id: string }}) {
+// GET /api/images/[id]
+// Get one image by ID
+export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
+    const { id } = await context.params;
+
     const image = await prisma.image.findUnique({
-        where: { id: Number(params.id) },
+        where: { id: Number(id) },
         include: { album: true },
     });
 
@@ -17,25 +19,32 @@ export async function get_one(req: Request, { params } : { params : { id: string
 }
 
 // PATCH /api/images/[id]
-// update one image by id
-export async function patch(req: Request, { params } : { params : { id: string }}) {
+// Update one image by ID
+export async function PATCH(req: Request,context: { params: Promise<{ id: string }> }) {
+    const { id } = await context.params;
+
     const body = await req.json();
     const { title, albumId } = body;
 
-    const updatedData = await prisma.image.update({
-        where: { id: Number(params.id) },
+    const updatedImage = await prisma.image.update({
+        where: { id: Number(id) },
         data: {
-            title,
-            albumId: albumId ? Number(albumId) : undefined
+        title,
+        albumId: albumId ? Number(albumId) : undefined,
         },
-    })
+    });
 
-    return NextResponse.json(updatedData);
+    return NextResponse.json(updatedImage);
 }
 
 // DELETE /api/images/[id]
-// delete one image by id
-export async function del_image(req: Request, { params }: { params: { id: string } }) {
-    await prisma.image.delete({ where: { id: Number(params.id) } });
+// Delete one image by ID
+export async function DELETE(req: Request,context: { params: Promise<{ id: string }> }) {
+    const { id } = await context.params;
+
+    await prisma.image.delete({
+        where: { id: Number(id) },
+    });
+
     return NextResponse.json({ success: true });
 }
