@@ -10,10 +10,10 @@ import {
 export default function Footer() {
     return (
         <footer className="bg-black text-gray-300 py-10 mt-20">
-            <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div className="max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
 
                 {/* Logo + description */}
-                <div>
+                <div className="flex flex-col items-center md:items-start">
                 <div className="flex items-center gap-2">
                     <Camera className="w-7 h-7 text-white" />
                     <span className="text-xl font-semibold text-white">MyGallery</span>
@@ -25,7 +25,7 @@ export default function Footer() {
                 </div>
 
                 {/* Navigation links */}
-                <div>
+                <div className="flex flex-col items-center">
                 <h3 className="text-white font-medium text-lg mb-3">Navigation</h3>
                 <ul className="space-y-2 text-gray-400">
                     <li><a href="#home" className="hover:text-white transition">Accueil</a></li>
@@ -35,7 +35,7 @@ export default function Footer() {
                 </div>
 
                 {/* Social links + tooltips */}
-                <div>
+                <div className="flex flex-col items-center md:items-end">
                 <h3 className="text-white font-medium text-lg mb-3">Réseaux</h3>
                 <TooltipProvider delayDuration={80}>
                     <div className="flex gap-4">

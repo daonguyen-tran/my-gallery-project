@@ -46,7 +46,7 @@ export default function CreateAlbumPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center px-6 py-10 bg-gray-50">
+        <div className="fixed inset-0 flex items-center justify-center px-6 bg-gray-50">
             <Card className="w-full max-w-md shadow-xl">
                 <CardHeader>
                     <CardTitle className="text-3xl font-bold">Créer un album</CardTitle>

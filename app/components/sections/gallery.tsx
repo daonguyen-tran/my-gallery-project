@@ -7,16 +7,18 @@ export default async function GallerySection() {
 
     return (
         <section id="gallery" className="py-20 bg-gray-50">
-            <div className="max-w-6xl mxcd cd-auto px-6">
-                <h2 className="text-4xl font-bold mb-10">Galerie</h2>
+            <div className="flex justify-center">
+                <div className="w-full max-w-7xl px-6">
+                    <h2 className="text-4xl font-bold mb-10">Galerie</h2>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {albums.map((album: any) => (
-                        <AlbumCard key={album.id} album={album} />
-                    ))}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                        {albums.map((album: any) => (
+                            <AlbumCard key={album.id} album={album} />
+                        ))}
 
-                    {/* Bouton Ajouter un album */}
-                    <AddAlbumCard />
+                        {/* Bouton Ajouter un album */}
+                        <AddAlbumCard />
+                    </div>
                 </div>
             </div>
         </section>

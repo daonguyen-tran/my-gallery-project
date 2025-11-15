@@ -16,10 +16,10 @@ export default function Navbar() {
 
     return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
-        <div className="mx-auto max-w-6xl px-6 flex items-center justify-between h-16">
+        <div className="mx-auto w-full px-6 flex items-center justify-center h-16 relative">
             
             {/* Left: Logo */}
-            <Link href="/" className="text-xl font-semibold tracking-tight">
+            <Link href="/" className="text-xl font-semibold tracking-tight absolute left-6">
                 MyGallery
             </Link>
 
@@ -42,7 +42,7 @@ export default function Navbar() {
             </div>
 
             {/* Right: Profile icon */}
-            <div className="hidden md:flex">
+            <div className="hidden md:flex absolute right-6">
                 <button className="p-2 rounded-full hover:bg-gray-100 transition">
                     <User className="w-5 h-5 text-gray-700" />
                 </button>
@@ -50,8 +50,8 @@ export default function Navbar() {
 
             {/* Mobile Menu Button */}
             <button
-                className="md:hidden p-2"
-                onClick={() => setIsOpen(!open)}
+                className="md:hidden p-2 absolute right-6"
+                onClick={() => setIsOpen(!isOpen)}
                 aria-label="toggle menu"
             >
                 {isOpen ? <X /> : <Menu />}
