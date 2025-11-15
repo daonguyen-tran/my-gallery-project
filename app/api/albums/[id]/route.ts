@@ -2,11 +2,19 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 // GET /api/albums/[id]
-export async function GET(req: Request, context: { params: Promise<{ id: string }> }) {
-  const { id } = await context.params; // IMPORTANT
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id: idParam } = await params;
+  const id = Number(idParam);
+
+  if (Number.isNaN(id)) {
+    return NextResponse.json({ error: "Invalid album ID" }, { status: 400 });
+  }
 
   const album = await prisma.album.findUnique({
-    where: { id: Number(id) },
+    where: { id },
     include: { images: true },
   });
 
@@ -18,19 +26,21 @@ export async function GET(req: Request, context: { params: Promise<{ id: string 
 }
 
 // PATCH /api/albums/[id]
-export async function PATCH(req: Request, context: { params: Promise<{ id: string }> }) {
-  const { id } = await context.params;
+export async function PATCH(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id: idParam } = await params;
+  const id = Number(idParam);
 
-  const albumId = Number(id);
-
-  if (Number.isNaN(albumId)) {
-    return NextResponse.json({ error: "Invalid album id" }, { status: 400 });
+  if (Number.isNaN(id)) {
+    return NextResponse.json({ error: "Invalid album ID" }, { status: 400 });
   }
 
   const updates = await req.json();
 
   const updatedAlbum = await prisma.album.update({
-    where: { id: albumId },
+    where: { id },
     data: updates,
   });
 
@@ -38,11 +48,19 @@ export async function PATCH(req: Request, context: { params: Promise<{ id: strin
 }
 
 // DELETE /api/albums/[id]
-export async function DELETE(req: Request, context: { params: Promise<{ id: string }> }) {
-  const { id } = await context.params;
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id: idParam } = await params;
+  const id = Number(idParam);
+
+  if (Number.isNaN(id)) {
+    return NextResponse.json({ error: "Invalid album ID" }, { status: 400 });
+  }
 
   await prisma.album.delete({
-    where: { id: Number(id) },
+    where: { id },
   });
 
   return NextResponse.json({ success: true });
