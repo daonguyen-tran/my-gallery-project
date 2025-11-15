@@ -1,33 +1,34 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ImageIcon } from "lucide-react";
 
-export default function AlbumCard({ album }: { album: any }) {
-    const cover =
-        album.images?.[0]?.url ??
-        "https://images.unsplash.com/photo-1584395630827-860eee694d7b?q=80&w=800&auto=format";
+export function AlbumCard({ album }: { album: any }) {
+    const hasImages = Array.isArray(album.images) && album.images.length > 0;
+    const cover = hasImages ? album.images[0].url : null;
 
     return (
         <Link
-            href={`/albums/${album.id}`}
-            className="group block overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition"
+        href={`/albums/${album.id}`}
+        className="group block rounded-xl shadow hover:shadow-lg transition overflow-hidden border border-white/10 bg-white/5"
         >
-            {/* Image */}
-            <div className="relative h-48 w-full overflow-hidden">
-                <img
-                    src={cover}
+            <div className="relative w-full h-48 flex items-center justify-center bg-gray-900/20">
+                {hasImages ? (
+                <Image
+                    src={cover!}
                     alt={album.name}
-                    className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
+                ) : (
+                <ImageIcon className="text-gray-400 w-16 h-16" />
+                )}
             </div>
 
-            {/* Content */}
-            <div className="p-4 flex items-center justify-between">
+            <div className="p-4 text-center">
                 <h3 className="text-lg font-semibold">{album.name}</h3>
-
-                <div className="flex items-center gap-1 text-gray-600 text-sm">
-                    <ImageIcon className="w-4 h-4" />
-                    {album.images?.length ?? 0}
-                </div>
+                <p className="text-sm text-muted-foreground">
+                    {album.images.length} image{album.images.length > 1 ? "s" : ""}
+                </p>
             </div>
         </Link>
     );

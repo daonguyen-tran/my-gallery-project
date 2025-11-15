@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AlbumCard from "../album_card";
+import { AlbumCard } from "../album_card";
 
 export default function GallerySection() {
     const [albums, setAlbums] = useState<any[]>([]);
@@ -38,11 +38,11 @@ export default function GallerySection() {
 
                 {/* Albums grid */}
                 {!loading && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-                    {albums.map((album) => (
-                    <AlbumCard key={album.id} album={album} />
-                    ))}
-                </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                        {albums.map((album) => (
+                        <AlbumCard key={album.id} album={album} />
+                        ))}
+                    </div>
                 )}
             </div>
         </section>

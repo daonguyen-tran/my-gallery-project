@@ -9,7 +9,7 @@ export default function Navbar() {
 
     const navItems = [
         { label : "Home", href: "#" },
-        { label : "Albums", href: "#albums" },
+        { label : "Albums", href: "#gallery" },
         { label : "About", href: "#about" },
         { label : "Contact", href: "#contact" },
     ]
@@ -20,7 +20,7 @@ export default function Navbar() {
             
             {/* Left: Logo */}
             <Link href="/" className="text-xl font-semibold tracking-tight">
-            MyGallery
+                MyGallery
             </Link>
 
             {/* Center: Navigation links (desktop) */}

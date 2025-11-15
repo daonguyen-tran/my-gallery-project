@@ -136,3 +136,8 @@
 .animate-fadeIn {
   animation: fadeIn 1s ease-out forwards;
 }
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
