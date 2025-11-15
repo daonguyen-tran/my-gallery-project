@@ -1,4 +1,5 @@
 import AlbumCard from "../album_card";
+import AddAlbumCard from "../add_album_card";
 
 export default async function GallerySection() {
     const res = await fetch("http://localhost:3000/api/albums", { cache: "no-store" });
@@ -13,6 +14,9 @@ export default async function GallerySection() {
                     {albums.map((album: any) => (
                         <AlbumCard key={album.id} album={album} />
                     ))}
+
+                    {/* Bouton Ajouter un album */}
+                    <AddAlbumCard />
                 </div>
             </div>
         </section>
