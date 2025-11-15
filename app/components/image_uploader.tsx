@@ -46,5 +46,5 @@ export default function ImageUploader({ albumId }: { albumId: number }) {
                 {loading ? "Uploading..." : "Upload"}
             </button>
         </div>
-    );
+    );<
 }
