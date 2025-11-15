@@ -44,9 +44,10 @@ export async function POST(req: Request) {
         // Insert in DB
         const image = await prisma.image.create({
             data: {
-                title,
+                title: title,
                 url: publicUrl,
                 albumId: Number(albumId),
+                filename: fileName,
             },
         });
 

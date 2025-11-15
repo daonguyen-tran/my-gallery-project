@@ -8,9 +8,9 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
 
     const navItems = [
-        { label : "Home", href: "#" },
-        { label : "Albums", href: "#gallery" },
-        { label : "About", href: "#about" },
+        { label : "Accueil", href: "#" },
+        { label : "Galerie", href: "#gallery" },
+        { label : "A propos", href: "#about" },
         { label : "Contact", href: "#contact" },
     ]
 
