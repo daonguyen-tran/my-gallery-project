@@ -45,7 +45,7 @@ next-env.d.ts
 
 # Prisma
 prisma/dev.db
-prisma/migrations/*
+prisma/dev.db-journal
 
 # public/uploads
 /public/uploads
