@@ -1,26 +1,33 @@
 import AlbumCard from "../album_card";
 import AddAlbumCard from "../add_album_card";
+import AnimateOnScroll from "../animate_on_scroll";
 
 export default async function GallerySection() {
-    const res = await fetch("http://localhost:3000/api/albums", { cache: "no-store" });
-    const albums = await res.json();
+  const res = await fetch("http://localhost:3000/api/albums", {
+    cache: "no-store",
+  });
+  const albums = await res.json();
 
-    return (
-        <section id="gallery" className="py-20 bg-gray-50">
-            <div className="flex justify-center">
-                <div className="w-full max-w-7xl px-6">
-                    <h2 className="text-4xl font-bold mb-10">Galerie</h2>
+  return (
+    <section id="gallery" className="py-20 bg-gray-50">
+      <div className="flex justify-center">
+        <div className="w-full max-w-7xl px-6">
+          <AnimateOnScroll>
+            <h2 className="text-4xl font-bold mb-10">Galerie</h2>
+          </AnimateOnScroll>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                        {albums.map((album: any) => (
-                            <AlbumCard key={album.id} album={album} />
-                        ))}
+          <AnimateOnScroll className="mt-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {albums.map((album: any) => (
+                <AlbumCard key={album.id} album={album} />
+              ))}
 
-                        {/* Bouton Ajouter un album */}
-                        <AddAlbumCard />
-                    </div>
-                </div>
+              {/* Bouton Ajouter un album */}
+              <AddAlbumCard />
             </div>
-        </section>
-    );
+          </AnimateOnScroll>
+        </div>
+      </div>
+    </section>
+  );
 }
