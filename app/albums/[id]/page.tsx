@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import AddImageCard from "@/app/components/add_image_card";
+import DeleteImageButton from "@/app/components/delete_image_button";
 
 export default function AlbumPage(props: { params: Promise<{ id: string }> }) {
   const [album, setAlbum] = useState<any>(null);
@@ -66,13 +67,41 @@ export default function AlbumPage(props: { params: Promise<{ id: string }> }) {
           {album.images.map((img: any) => (
             <div
               key={img.id}
-              className="relative w-full h-48 bg-gray-100 rounded-lg overflow-hidden shadow-sm"
+              className="relative w-full h-48 bg-gray-100 rounded-lg overflow-hidden shadow-sm group transform transition-transform duration-300 hover:scale-105 hover:shadow-lg"
             >
-              <Image
-                src={img.url}
-                alt={img.title}
-                fill
-                className="object-cover"
+              <a
+                href={img.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute inset-0 block"
+                aria-label={img.title || "Ouvrir l'image"}
+              >
+                <Image
+                  src={img.url}
+                  alt={img.title}
+                  fill
+                  className="object-cover"
+                />
+
+                {/* Overlay shown on hover */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+
+                <div className="absolute left-3 right-3 bottom-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="bg-black/50 backdrop-blur-sm px-3 py-1 rounded text-sm truncate">
+                    {img.title || "Sans titre"}
+                  </div>
+                </div>
+              </a>
+
+              <DeleteImageButton
+                imageId={img.id}
+                onDeleted={() => {
+                  // remove image from local state for instant feedback
+                  setAlbum((prev: any) => ({
+                    ...prev,
+                    images: prev.images.filter((i: any) => i.id !== img.id),
+                  }));
+                }}
               />
             </div>
           ))}
