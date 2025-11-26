@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@supabase/supabase-js";
+import { getCurrentUser, canEditAlbum } from "@/lib/auth";
 
 // GET /api/images/
 export async function GET(req: Request) {
@@ -11,6 +12,12 @@ export async function GET(req: Request) {
 // POST /api/images
 export async function POST(req: Request) {
   try {
+    const user = await getCurrentUser();
+
+    if (!user) {
+      return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
+    }
+
     const formData = await req.formData();
 
     const file = formData.get("file") as File | null;
@@ -18,8 +25,27 @@ export async function POST(req: Request) {
 
     if (!file || !albumId) {
       return NextResponse.json(
-        { error: "Missing file or albumId" },
+        { error: "Fichier ou albumId manquant" },
         { status: 400 }
+      );
+    }
+
+    // Vérifier les permissions sur l'album
+    const album = await prisma.album.findUnique({
+      where: { id: Number(albumId) },
+    });
+
+    if (!album) {
+      return NextResponse.json({ error: "Album non trouvé" }, { status: 404 });
+    }
+
+    if (!canEditAlbum(user.id, album.userId, user.role)) {
+      return NextResponse.json(
+        {
+          error:
+            "Vous n'avez pas la permission d'ajouter des images à cet album",
+        },
+        { status: 403 }
       );
     }
 
@@ -40,7 +66,7 @@ export async function POST(req: Request) {
 
     if (error) {
       console.error(error);
-      return NextResponse.json({ error: "Upload failed" }, { status: 500 });
+      return NextResponse.json({ error: "Échec de l'upload" }, { status: 500 });
     }
 
     // public URL
@@ -62,7 +88,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error(err);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Erreur interne du serveur" },
       { status: 500 }
     );
   }

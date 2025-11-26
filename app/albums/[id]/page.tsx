@@ -2,15 +2,20 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, User } from "lucide-react";
 
 import AddImageCard from "@/app/components/add_image_card";
 import DeleteImageButton from "@/app/components/delete_image_button";
 import ImageViewer from "@/app/components/image_viewer";
+import {
+  PermissionGuard,
+  usePermissions,
+} from "@/app/components/permission_guard";
 
 export default function AlbumPage(props: { params: Promise<{ id: string }> }) {
   const [album, setAlbum] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const permissions = usePermissions();
 
   // Visionneuse
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -68,10 +73,40 @@ export default function AlbumPage(props: { params: Promise<{ id: string }> }) {
         Retour
       </a>
 
-      {/* Titre + bouton upload */}
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold">{album.name}</h1>
-        <AddImageCard albumId={album.id} onUploaded={loadAlbum} />
+      {/* Titre + info créateur */}
+      <div className="mb-8">
+        <div className="flex justify-between items-start">
+          <div>
+            <h1 className="text-4xl font-bold mb-3">{album.name}</h1>
+            {/* Afficher le créateur */}
+            {album.user && (
+              <div className="flex items-center gap-2 text-gray-600">
+                {album.user.profileImage ? (
+                  <Image
+                    src={album.user.profileImage}
+                    alt={`${album.user.firstname} ${album.user.surname}`}
+                    width={24}
+                    height={24}
+                    className="rounded-full object-cover"
+                  />
+                ) : (
+                  <User className="w-5 h-5" />
+                )}
+                <span className="text-sm">
+                  Créé par{" "}
+                  <span className="font-medium">
+                    {album.user.firstname} {album.user.surname}
+                  </span>
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Bouton upload - visible seulement si l'utilisateur peut éditer */}
+          <PermissionGuard canEdit albumUserId={album.userId}>
+            <AddImageCard albumId={album.id} onUploaded={loadAlbum} />
+          </PermissionGuard>
+        </div>
       </div>
 
       {/* Images */}
@@ -106,21 +141,22 @@ export default function AlbumPage(props: { params: Promise<{ id: string }> }) {
                 </div>
               </div>
 
-              {/* Bouton supprimer — STOP PROPAGATION */}
-              <div
-                onClick={(e) => e.stopPropagation()} // empêche d’ouvrir la visionneuse
-              >
-                <DeleteImageButton
-                  imageId={img.id}
-                  onDeleted={() => {
-                    // Mise à jour locale instantanée
-                    setAlbum((prev: any) => ({
-                      ...prev,
-                      images: prev.images.filter((im: any) => im.id !== img.id),
-                    }));
-                  }}
-                />
-              </div>
+              {/* Bouton supprimer - visible seulement si l'utilisateur peut éditer */}
+              <PermissionGuard canEdit albumUserId={album.userId}>
+                <div onClick={(e) => e.stopPropagation()}>
+                  <DeleteImageButton
+                    imageId={img.id}
+                    onDeleted={() => {
+                      setAlbum((prev: any) => ({
+                        ...prev,
+                        images: prev.images.filter(
+                          (im: any) => im.id !== img.id
+                        ),
+                      }));
+                    }}
+                  />
+                </div>
+              </PermissionGuard>
             </div>
           ))}
         </div>

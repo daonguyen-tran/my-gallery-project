@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ImageIcon } from "lucide-react";
+import { ImageIcon, User } from "lucide-react";
 
 export default function AlbumCard({ album }: { album: any }) {
   const hasImages = album.images && album.images.length > 0;
@@ -36,6 +36,26 @@ export default function AlbumCard({ album }: { album: any }) {
           <p className="text-gray-500 text-sm mt-1">
             {album.images?.length || 0} photo(s)
           </p>
+
+          {/* Afficher le créateur */}
+          {album.user && (
+            <div className="flex items-center gap-2 mt-2 text-sm text-gray-600">
+              {album.user.profileImage ? (
+                <Image
+                  src={album.user.profileImage}
+                  alt={`${album.user.firstname} ${album.user.surname}`}
+                  width={20}
+                  height={20}
+                  className="rounded-full object-cover"
+                />
+              ) : (
+                <User className="w-4 h-4" />
+              )}
+              <span>
+                {album.user.firstname} {album.user.surname}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </Link>
