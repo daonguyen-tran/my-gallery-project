@@ -140,7 +140,7 @@ export default function ProfilePage() {
         return;
       }
 
-      // Update session
+      // Update session - IMPORTANT: await the update
       await update({
         ...session,
         user: {
@@ -153,6 +153,9 @@ export default function ProfilePage() {
       toast.success("Profil mis à jour avec succès !");
       setProfileImage(null);
       setLoading(false);
+
+      // Forcer le rechargement complet de la page pour mettre à jour la session
+      window.location.href = "/";
     } catch (error) {
       console.error(error);
       toast.error("Erreur lors de la mise à jour");
@@ -197,7 +200,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12 px-4 animate-fadeIn">
       <div className="max-w-2xl mx-auto">
         {/* Back button */}
         <Link
@@ -320,7 +323,7 @@ export default function ProfilePage() {
                 type="button"
                 onClick={() => setShowSaveDialog(true)}
                 disabled={!hasChanges || loading || uploading}
-                className="flex-1"
+                className="flex-1 cursor-pointer"
               >
                 {loading || uploading ? (
                   <div className="flex items-center gap-2">
@@ -336,7 +339,7 @@ export default function ProfilePage() {
                 variant="outline"
                 onClick={handleCancel}
                 disabled={loading || uploading}
-                className="flex-1"
+                className="flex-1 cursor-pointer"
               >
                 Annuler
               </Button>

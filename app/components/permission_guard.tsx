@@ -35,7 +35,12 @@ export function PermissionGuard({
   }
 
   // Vérifier les permissions d'édition
-  if (canEdit && session?.user) {
+  if (canEdit) {
+    // Pas de session = pas d'édition
+    if (!session?.user) {
+      return null;
+    }
+
     const userRole = session.user.role;
     const userId = session.user.id;
 

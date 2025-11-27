@@ -80,11 +80,11 @@ export default function Navbar() {
                           alt={session.user.name || "User"}
                           width={32}
                           height={32}
-                          className="rounded-full object-cover border-2 border-gray-200"
+                          className="rounded-full object-cover border-2 border-gray-200 cursor-pointer"
                         />
                       ) : (
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
-                          <UserCircle className="w-5 h-5 text-white" />
+                          <UserCircle className="w-5 h-5 text-white cursor-pointer" />
                         </div>
                       )}
                     </TooltipTrigger>
@@ -99,21 +99,13 @@ export default function Navbar() {
                   </Tooltip>
 
                   {/* Display user name */}
-                  <span className="text-sm font-medium text-gray-700">
+                  {/*<span className="text-sm font-medium text-gray-700">
+                    {session.user.name}
+                  </span>*/}
+                  <span className="px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 border border-blue-200">
                     {session.user.name}
                   </span>
                 </Link>
-
-                {/* Role badge */}
-                {session.user.role && (
-                  <span
-                    className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      getRoleBadge(session.user.role).color
-                    }`}
-                  >
-                    {getRoleBadge(session.user.role).label}
-                  </span>
-                )}
 
                 {/* Logout button */}
                 <Tooltip>
@@ -122,7 +114,7 @@ export default function Navbar() {
                       onClick={() => signOut({ callbackUrl: "/" })}
                       className="p-2 rounded-full hover:bg-red-50 transition text-red-600"
                     >
-                      <LogOut className="w-4 h-4" />
+                      <LogOut className="w-4 h-4 cursor-pointer" />
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -133,10 +125,12 @@ export default function Navbar() {
             </TooltipProvider>
           ) : (
             <div className="flex items-center gap-3">
-              <span className="text-sm font-medium text-gray-500">Invité</span>
+              <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">
+                Invité
+              </span>
               <Link
                 href="/auth"
-                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition text-sm font-medium"
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition text-sm font-medium cursor-pointer"
               >
                 <LogIn className="w-4 h-4" />
                 Se connecter
@@ -189,15 +183,9 @@ export default function Navbar() {
                   )}
                   <div>
                     <p className="font-semibold text-sm">{session.user.name}</p>
-                    {session.user.role && (
-                      <span
-                        className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium mt-1 ${
-                          getRoleBadge(session.user.role).color
-                        }`}
-                      >
-                        {getRoleBadge(session.user.role).label}
-                      </span>
-                    )}
+                    <span className="inline-block px-2 py-0.5 rounded-full text-xs font-medium mt-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 border border-blue-200">
+                      {session.user.name}
+                    </span>
                   </div>
                 </div>
                 <button
@@ -209,14 +197,19 @@ export default function Navbar() {
                 </button>
               </div>
             ) : (
-              <Link
-                href="/auth"
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition text-sm font-medium"
-                onClick={() => setIsOpen(false)}
-              >
-                <LogIn className="w-4 h-4" />
-                Se connecter
-              </Link>
+              <div className="space-y-3">
+                <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">
+                  Invité
+                </span>
+                <Link
+                  href="/auth"
+                  className="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition text-sm font-medium"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <LogIn className="w-4 h-4" />
+                  Se connecter
+                </Link>
+              </div>
             )}
           </div>
         </div>

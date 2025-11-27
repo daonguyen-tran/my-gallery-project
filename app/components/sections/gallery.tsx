@@ -10,27 +10,27 @@ export default function GallerySection() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchAlbums() {
-      try {
-        const baseUrl =
-          process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-        const res = await fetch(`${baseUrl}/api/albums`, {
-          cache: "no-store",
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          setAlbums(data);
-        }
-      } catch (error) {
-        console.error("Error fetching albums:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
     fetchAlbums();
   }, []);
+
+  async function fetchAlbums() {
+    try {
+      const baseUrl =
+        process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+      const res = await fetch(`${baseUrl}/api/albums`, {
+        cache: "no-store",
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setAlbums(data);
+      }
+    } catch (error) {
+      console.error("Error fetching albums:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <section id="gallery" className="py-20 bg-gray-50">
@@ -48,7 +48,11 @@ export default function GallerySection() {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {albums.map((album: any) => (
-                  <AlbumCard key={album.id} album={album} />
+                  <AlbumCard
+                    key={album.id}
+                    album={album}
+                    onDeleted={fetchAlbums}
+                  />
                 ))}
 
                 {/* Bouton Ajouter un album - protégé par permissions */}

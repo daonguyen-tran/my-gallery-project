@@ -76,21 +76,27 @@ export default function AuthPage() {
         const formData = new FormData();
         formData.append("file", profileImage);
 
-        const uploadRes = await fetch("/api/auth/upload-profile", {
-          method: "POST",
-          body: formData,
-        });
+        try {
+          const uploadRes = await fetch("/api/auth/upload-profile", {
+            method: "POST",
+            body: formData,
+          });
 
-        if (!uploadRes.ok) {
-          toast.error("Erreur lors de l'upload de l'image");
-          setLoading(false);
+          if (!uploadRes.ok) {
+            toast.error("Erreur lors de l'upload de l'image (bucket Supabase non configuré). Compte créé sans photo.");
+            setUploading(false);
+            // Continue sans photo de profil au lieu d'arrêter
+          } else {
+            const uploadData = await uploadRes.json();
+            profileImageUrl = uploadData.url;
+            setUploading(false);
+          }
+        } catch (uploadError) {
+          console.error("Upload error:", uploadError);
+          toast.error("Erreur upload - Compte créé sans photo");
           setUploading(false);
-          return;
+          // Continue sans photo de profil
         }
-
-        const uploadData = await uploadRes.json();
-        profileImageUrl = uploadData.url;
-        setUploading(false);
       }
 
       // Créer le compte
@@ -156,18 +162,18 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4">
-      <div className="bg-white w-full max-w-4xl rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-        <div className="grid md:grid-cols-2 min-h-[600px]">
+    <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4 md:p-8">
+      <div className="bg-white w-full max-w-5xl aspect-[16/10] max-h-[85vh] rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+        <div className="grid md:grid-cols-2 h-full">
           {/* Left side - Welcome / Info */}
-          <div className="hidden md:flex flex-col justify-center p-8 bg-gradient-to-br from-blue-600 to-purple-600 text-white">
-            <h1 className="text-4xl font-bold mb-4">MyGallery</h1>
-            <p className="text-blue-100 mb-6">
+          <div className="hidden md:flex flex-col justify-center p-8 lg:p-10 bg-gradient-to-br from-blue-600 to-purple-600 text-white">
+            <h1 className="text-4xl lg:text-5xl font-bold mb-4 lg:mb-6">MyGallery</h1>
+            <p className="text-blue-100 mb-6 lg:mb-8 text-base lg:text-lg leading-relaxed">
               {mode === "signin"
                 ? "Bienvenue ! Connectez-vous pour accéder à vos albums et partager vos plus beaux souvenirs."
                 : "Rejoignez notre communauté et créez votre propre galerie photo en quelques clics."}
             </p>
-            <div className="space-y-3 text-sm text-blue-100">
+            <div className="space-y-3 lg:space-y-4 text-sm lg:text-base text-blue-100">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-white rounded-full"></div>
                 <span>Albums illimités</span>
@@ -184,8 +190,8 @@ export default function AuthPage() {
           </div>
 
           {/* Right side - Form */}
-          <div className="flex flex-col justify-center p-6 md:p-8">
-            <h2 className="text-2xl font-bold mb-1 text-center">
+          <div className="flex flex-col justify-center p-6 md:p-8 lg:p-10">
+            <h2 className="text-2xl lg:text-3xl font-bold mb-2 text-center">
               {mode === "signin" ? "Connexion" : "Créer un compte"}
             </h2>
             <p className="text-gray-500 text-center mb-6 text-sm md:hidden">
@@ -238,7 +244,7 @@ export default function AuthPage() {
                 </Button>
               </form>
             ) : (
-              <form onSubmit={handleSignUp} className="space-y-3">
+              <form onSubmit={handleSignUp} className="space-y-2">
                 {/* Photo de profil */}
                 <div className="flex flex-col items-center mb-2">
                   <div className="relative w-20 h-20 mb-2">
