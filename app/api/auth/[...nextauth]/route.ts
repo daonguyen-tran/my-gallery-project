@@ -51,12 +51,36 @@ export const authOptions: NextAuthOptions = {
   ],
 
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
+      // Lors de la connexion initiale
       if (user) {
         token.id = Number(user.id);
         token.role = user.role;
         token.picture = user.image;
       }
+
+      // Rafraîchir les données depuis la DB lors d'une mise à jour
+      if (trigger === "update" && token.id) {
+        const dbUser = await prisma.user.findUnique({
+          where: { id: Number(token.id) },
+          select: {
+            id: true,
+            firstname: true,
+            surname: true,
+            email: true,
+            role: true,
+            profileImage: true,
+          },
+        });
+
+        if (dbUser) {
+          token.name = `${dbUser.firstname} ${dbUser.surname}`;
+          token.email = dbUser.email;
+          token.role = dbUser.role;
+          token.picture = dbUser.profileImage;
+        }
+      }
+
       return token;
     },
 
@@ -65,6 +89,8 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.id;
         session.user.role = token.role;
         session.user.image = token.picture as string | null | undefined;
+        session.user.name = token.name as string;
+        session.user.email = token.email as string;
       }
       return session;
     },

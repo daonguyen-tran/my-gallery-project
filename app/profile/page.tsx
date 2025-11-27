@@ -140,7 +140,7 @@ export default function ProfilePage() {
         return;
       }
 
-      // Update session - IMPORTANT: await the update
+      // Mettre à jour la session avec les nouvelles données
       await update({
         ...session,
         user: {
@@ -154,8 +154,10 @@ export default function ProfilePage() {
       setProfileImage(null);
       setLoading(false);
 
-      // Forcer le rechargement complet de la page pour mettre à jour la session
-      window.location.href = "/";
+      // Rediriger vers la page d'accueil après un court délai
+      setTimeout(() => {
+        router.push("/");
+      }, 500);
     } catch (error) {
       console.error(error);
       toast.error("Erreur lors de la mise à jour");
