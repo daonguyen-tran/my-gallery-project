@@ -46,9 +46,7 @@ export default function AboutSection() {
       <div className="max-w-6xl mx-auto">
         <AnimateOnScroll>
           <div className="mb-16">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              À propos de MyGallery
-            </h2>
+            <h2 className="text-4xl font-bold mb-10">À propos de MyGallery</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Une plateforme moderne pour organiser et partager vos souvenirs
             </p>

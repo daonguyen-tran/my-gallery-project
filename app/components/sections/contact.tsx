@@ -6,9 +6,7 @@ export default function ContactSection() {
     <section id="contact" className="py-24 px-6 bg-white">
       <div className="max-w-3xl mx-auto text-center">
         <AnimateOnScroll>
-          <h2 className="text-4xl font-semibold mb-6 tracking-tight">
-            Contact
-          </h2>
+          <h2 className="text-4xl text-center font-bold mb-10">Contact</h2>
         </AnimateOnScroll>
 
         <AnimateOnScroll className="mt-4">
@@ -19,7 +17,7 @@ export default function ContactSection() {
 
           <div className="mt-10 flex flex-col items-center gap-4">
             <a
-              href="mailto:contact@example.com"
+              href="mailto:daonguyentr.pro@gmail.com"
               className="flex items-center gap-3 border border-gray-300 hover:border-black transition px-6 py-3 rounded-lg text-gray-800 hover:text-black"
             >
               <Mail className="w-6 h-6" />
