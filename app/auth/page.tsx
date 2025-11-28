@@ -156,18 +156,18 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 p-4">
-      <div className="bg-white w-full max-w-4xl rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 via-white to-gray-50 p-4">
+      <div className="bg-white w-full max-w-4xl rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
         <div className="grid md:grid-cols-2 min-h-[600px]">
           {/* Left side - Welcome / Info */}
-          <div className="hidden md:flex flex-col justify-center p-8 bg-gradient-to-br from-blue-600 to-purple-600 text-white">
+          <div className="hidden md:flex flex-col justify-center p-8 bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white">
             <h1 className="text-4xl font-bold mb-4">MyGallery</h1>
-            <p className="text-blue-100 mb-6">
+            <p className="text-gray-300 mb-6">
               {mode === "signin"
                 ? "Bienvenue ! Connectez-vous pour accéder à vos albums et partager vos plus beaux souvenirs."
                 : "Rejoignez notre communauté et créez votre propre galerie photo en quelques clics."}
             </p>
-            <div className="space-y-3 text-sm text-blue-100">
+            <div className="space-y-3 text-sm text-gray-300">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-white rounded-full"></div>
                 <span>Albums illimités</span>
@@ -185,10 +185,10 @@ export default function AuthPage() {
 
           {/* Right side - Form */}
           <div className="flex flex-col justify-center p-6 md:p-8">
-            <h2 className="text-2xl font-bold mb-1 text-center">
+            <h2 className="text-2xl font-bold mb-1 text-center text-black">
               {mode === "signin" ? "Connexion" : "Créer un compte"}
             </h2>
-            <p className="text-gray-500 text-center mb-6 text-sm md:hidden">
+            <p className="text-gray-600 text-center mb-6 text-sm md:hidden">
               {mode === "signin"
                 ? "Bienvenue sur MyGallery"
                 : "Rejoignez notre communauté"}
@@ -224,7 +224,7 @@ export default function AuthPage() {
 
                 <Button
                   type="submit"
-                  className="w-full mt-4"
+                  className="w-full mt-4 bg-gradient-to-r from-gray-900 to-black hover:from-black hover:to-gray-900 text-white transition-all duration-300 shadow-lg hover:shadow-xl"
                   disabled={loading}
                 >
                   {loading ? (
@@ -359,7 +359,7 @@ export default function AuthPage() {
 
                 <Button
                   type="submit"
-                  className="w-full mt-4"
+                  className="w-full mt-4 bg-gradient-to-r from-gray-900 to-black hover:from-black hover:to-gray-900 text-white transition-all duration-300 shadow-lg hover:shadow-xl"
                   disabled={loading || uploading}
                 >
                   {loading || uploading ? (
@@ -380,7 +380,7 @@ export default function AuthPage() {
                   setMode(mode === "signin" ? "signup" : "signin");
                   setLoading(false);
                 }}
-                className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
+                className="text-sm text-gray-700 hover:text-black hover:underline transition-colors duration-300 font-medium"
               >
                 {mode === "signin"
                   ? "Pas encore de compte ? Créer un compte"

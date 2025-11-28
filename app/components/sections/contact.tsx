@@ -6,7 +6,7 @@ export default function ContactSection() {
     <section id="contact" className="py-24 px-6 bg-white">
       <div className="max-w-3xl mx-auto text-center">
         <AnimateOnScroll>
-          <h2 className="text-4xl text-center font-bold mb-10">Contact</h2>
+          <h2 className="text-5xl text-center font-bold mb-10">Contact</h2>
         </AnimateOnScroll>
 
         <AnimateOnScroll className="mt-4">
@@ -34,7 +34,7 @@ export default function ContactSection() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-gray-600">
             <div className="flex flex-col items-center">
               <User className="w-8 h-8 text-gray-700 mb-3" />
-              <p>Photographe passionné</p>
+              <p>Passionné de photographie</p>
             </div>
 
             <div className="flex flex-col items-center">

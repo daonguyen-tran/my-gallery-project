@@ -32,12 +32,12 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm">
       <div className="mx-auto w-full px-6 flex items-center justify-center h-16 relative">
         {/* Left: Logo */}
         <Link
           href="/"
-          className="text-xl font-semibold tracking-tight absolute left-6"
+          className="text-xl font-bold tracking-tight absolute left-6 text-black hover:opacity-70 transition-opacity"
         >
           MyGallery
         </Link>
@@ -49,7 +49,7 @@ export default function Navbar() {
               key={item.href}
               href={item.href}
               className={
-                "relative text-gray-700 hover:text-black transition " +
+                "relative text-gray-700 hover:text-black transition-all duration-300 " +
                 "after:absolute after:left-0 after:-bottom-1 after:h-[2px] " +
                 "after:w-full after:scale-x-0 after:bg-black after:origin-left " +
                 "after:transition after:duration-300 hover:after:scale-x-100"
@@ -83,7 +83,7 @@ export default function Navbar() {
                           className="rounded-full object-cover border-2 border-gray-200 cursor-pointer"
                         />
                       ) : (
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-700 to-black flex items-center justify-center">
                           <UserCircle className="w-5 h-5 text-white cursor-pointer" />
                         </div>
                       )}
@@ -102,7 +102,7 @@ export default function Navbar() {
                   {/*<span className="text-sm font-medium text-gray-700">
                     {session.user.name}
                   </span>*/}
-                  <span className="px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 border border-blue-200">
+                  <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-900 border border-gray-300 hover:bg-gray-200 transition-colors">
                     {session.user.name}
                   </span>
                 </Link>
@@ -130,7 +130,7 @@ export default function Navbar() {
               </span>
               <Link
                 href="/auth"
-                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition text-sm font-medium cursor-pointer"
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-gray-900 to-black text-white rounded-lg hover:from-black hover:to-gray-900 transition-all duration-300 text-sm font-medium cursor-pointer shadow-lg hover:shadow-xl"
               >
                 <LogIn className="w-4 h-4" />
                 Se connecter

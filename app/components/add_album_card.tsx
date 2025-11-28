@@ -9,7 +9,7 @@ export default function AddAlbumCard() {
     >
       <Plus className="w-12 h-12 text-gray-400 group-hover:text-blue-600 group-hover:scale-110 transition-all duration-300" />
       <p className="mt-4 text-gray-500 font-medium group-hover:text-blue-600 transition-colors duration-300">
-        Nouvel album
+        Créer un album
       </p>
     </Link>
   );

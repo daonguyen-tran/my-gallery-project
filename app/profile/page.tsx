@@ -202,23 +202,21 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-12 px-4 animate-fadeIn">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-50 py-12 px-4 animate-fadeIn">
       <div className="max-w-2xl mx-auto">
         {/* Back button */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition"
+          className="inline-flex items-center gap-2 text-gray-700 hover:text-black mb-6 transition-all duration-300 font-medium"
         >
           <ArrowLeft className="w-4 h-4" />
           Retour
         </Link>
 
         {/* Profile card */}
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
-          <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Mon Profil
-          </h1>
-          <p className="text-gray-500 mb-8">
+        <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 p-8 hover:shadow-3xl transition-shadow duration-300">
+          <h1 className="text-3xl font-bold mb-2 text-black">Mon Profil</h1>
+          <p className="text-gray-600 mb-8">
             Gérez vos informations personnelles
           </p>
 
@@ -234,7 +232,7 @@ export default function ProfilePage() {
                     className="rounded-full object-cover border-4 border-gray-200"
                   />
                 ) : (
-                  <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center border-4 border-gray-200">
+                  <div className="w-full h-full rounded-full bg-gradient-to-br from-gray-700 to-black flex items-center justify-center border-4 border-gray-200">
                     <UserCircle className="w-16 h-16 text-white" />
                   </div>
                 )}
@@ -302,12 +300,12 @@ export default function ProfilePage() {
               <Label>Rôle</Label>
               <div className="mt-1">
                 <span
-                  className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
+                  className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${
                     session.user.role === "ADMIN"
-                      ? "bg-red-100 text-red-700"
+                      ? "bg-black text-white border-black"
                       : session.user.role === "USER"
-                      ? "bg-blue-100 text-blue-700"
-                      : "bg-gray-100 text-gray-700"
+                      ? "bg-gray-200 text-gray-900 border-gray-300"
+                      : "bg-gray-100 text-gray-700 border-gray-200"
                   }`}
                 >
                   {session.user.role === "ADMIN"
@@ -325,7 +323,7 @@ export default function ProfilePage() {
                 type="button"
                 onClick={() => setShowSaveDialog(true)}
                 disabled={!hasChanges || loading || uploading}
-                className="flex-1 cursor-pointer"
+                className="flex-1 cursor-pointer bg-gradient-to-r from-gray-900 to-black hover:from-black hover:to-gray-900 text-white shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 {loading || uploading ? (
                   <div className="flex items-center gap-2">
@@ -341,7 +339,7 @@ export default function ProfilePage() {
                 variant="outline"
                 onClick={handleCancel}
                 disabled={loading || uploading}
-                className="flex-1 cursor-pointer"
+                className="flex-1 cursor-pointer border-2 border-gray-300 hover:border-black text-gray-700 hover:text-black hover:bg-gray-50 transition-all duration-300"
               >
                 Annuler
               </Button>
