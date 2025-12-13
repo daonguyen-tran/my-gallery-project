@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/navbar";
 import { Toaster } from "@/components/ui/sonner";
 import AuthProvider from "./components/auth_provider";
+import { LanguageProvider } from "./components/language_context";
 
 /*const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,11 +45,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AuthProvider>
-          <Navbar />
-          <main className="pt-16">{children}</main>
-          <Toaster position="top-right" />
-        </AuthProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <Navbar />
+            <main className="pt-16">{children}</main>
+            <Toaster position="top-right" />
+          </AuthProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
