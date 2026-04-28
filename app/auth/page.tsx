@@ -9,9 +9,11 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Loader2, Upload, UserCircle } from "lucide-react";
 import Image from "next/image";
+import { useLanguage } from "../components/language_context";
 
 export default function AuthPage() {
   const router = useRouter();
+  const { t } = useLanguage();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
 
   // Signin
@@ -42,12 +44,12 @@ export default function AuthPage() {
     });
 
     if (res?.error) {
-      toast.error("Email ou mot de passe incorrect.");
+      toast.error(t("auth.errors.invalidCredentials"));
       setLoading(false);
       return;
     }
 
-    toast.success("Connexion réussie !");
+    toast.success(t("auth.success.loginSuccess"));
     router.push("/");
     router.refresh();
   }
@@ -56,12 +58,12 @@ export default function AuthPage() {
     e.preventDefault();
 
     if (signupData.password !== signupData.confirmPassword) {
-      toast.error("Les mots de passe ne correspondent pas");
+      toast.error(t("auth.errors.passwordMismatch"));
       return;
     }
 
     if (signupData.password.length < 6) {
-      toast.error("Le mot de passe doit contenir au moins 6 caractères");
+      toast.error(t("auth.errors.passwordTooShort"));
       return;
     }
 
@@ -82,7 +84,7 @@ export default function AuthPage() {
         });
 
         if (!uploadRes.ok) {
-          toast.error("Erreur lors de l'upload de l'image");
+          toast.error(t("auth.errors.uploadError"));
           setLoading(false);
           setUploading(false);
           return;
@@ -109,12 +111,12 @@ export default function AuthPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        toast.error(data.error || "Erreur lors de la création du compte");
+        toast.error(data.error || t("auth.errors.signupError"));
         setLoading(false);
         return;
       }
 
-      toast.success("Compte créé avec succès ! Connexion...");
+      toast.success(t("auth.success.signupSuccess"));
 
       // Connexion automatique
       const signInRes = await signIn("credentials", {
@@ -124,7 +126,7 @@ export default function AuthPage() {
       });
 
       if (signInRes?.error) {
-        toast.error("Compte créé mais erreur de connexion");
+        toast.error(t("auth.errors.signupError"));
         setMode("signin");
         setLoading(false);
         return;
@@ -134,7 +136,7 @@ export default function AuthPage() {
       router.refresh();
     } catch (error) {
       console.error(error);
-      toast.error("Erreur lors de la création du compte");
+      toast.error(t("auth.errors.signupError"));
       setLoading(false);
     }
   }
@@ -143,7 +145,7 @@ export default function AuthPage() {
     const file = e.target.files?.[0];
     if (file) {
       if (!file.type.startsWith("image/")) {
-        toast.error("Le fichier doit être une image");
+        toast.error(t("auth.errors.fileMustBeImage"));
         return;
       }
       setProfileImage(file);
@@ -164,21 +166,21 @@ export default function AuthPage() {
             <h1 className="text-4xl font-bold mb-4">MyGallery</h1>
             <p className="text-gray-300 mb-6">
               {mode === "signin"
-                ? "Bienvenue ! Connectez-vous pour accéder à vos albums et partager vos plus beaux souvenirs."
-                : "Rejoignez notre communauté et créez votre propre galerie photo en quelques clics."}
+                ? t("auth.signInDescription")
+                : t("auth.signUpDescription")}
             </p>
             <div className="space-y-3 text-sm text-gray-300">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-white rounded-full"></div>
-                <span>Albums illimités</span>
+                <span>{t("hero.unlimitedAlbums")}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-white rounded-full"></div>
-                <span>Partage facile</span>
+                <span>{t("hero.easySharing")}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-white rounded-full"></div>
-                <span>Interface moderne</span>
+                <span>{t("hero.modernInterface")}</span>
               </div>
             </div>
           </div>
@@ -186,18 +188,16 @@ export default function AuthPage() {
           {/* Right side - Form */}
           <div className="flex flex-col justify-center p-6 md:p-8">
             <h2 className="text-2xl font-bold mb-1 text-center text-black">
-              {mode === "signin" ? "Connexion" : "Créer un compte"}
+              {mode === "signin" ? t("auth.signIn") : t("auth.signUp")}
             </h2>
             <p className="text-gray-600 text-center mb-6 text-sm md:hidden">
-              {mode === "signin"
-                ? "Bienvenue sur MyGallery"
-                : "Rejoignez notre communauté"}
+              {mode === "signin" ? t("auth.welcomeBack") : t("auth.joinUs")}
             </p>
 
             {mode === "signin" ? (
               <form onSubmit={handleSignIn} className="space-y-3">
                 <div>
-                  <Label htmlFor="signin-email">Email</Label>
+                  <Label htmlFor="signin-email">{t("auth.email")}</Label>
                   <Input
                     id="signin-email"
                     type="email"
@@ -210,7 +210,7 @@ export default function AuthPage() {
                 </div>
 
                 <div>
-                  <Label htmlFor="signin-password">Mot de passe</Label>
+                  <Label htmlFor="signin-password">{t("auth.password")}</Label>
                   <Input
                     id="signin-password"
                     type="password"
@@ -230,10 +230,10 @@ export default function AuthPage() {
                   {loading ? (
                     <div className="flex items-center gap-2">
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      Connexion...
+                      {t("common.loading")}
                     </div>
                   ) : (
-                    "Se connecter"
+                    t("auth.login")
                   )}
                 </Button>
               </form>
@@ -258,7 +258,7 @@ export default function AuthPage() {
                   <label htmlFor="profile-image" className="cursor-pointer">
                     <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg transition text-xs">
                       <Upload className="w-4 h-4" />
-                      <span>Photo de profil (optionnel)</span>
+                      <span>{t("auth.optionalImage")}</span>
                     </div>
                     <input
                       id="profile-image"
@@ -272,7 +272,7 @@ export default function AuthPage() {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <Label htmlFor="firstname">Prénom</Label>
+                    <Label htmlFor="firstname">{t("auth.firstname")}</Label>
                     <Input
                       id="firstname"
                       type="text"
@@ -289,7 +289,7 @@ export default function AuthPage() {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="surname">Nom</Label>
+                    <Label htmlFor="surname">{t("auth.surname")}</Label>
                     <Input
                       id="surname"
                       type="text"
@@ -308,7 +308,7 @@ export default function AuthPage() {
                 </div>
 
                 <div>
-                  <Label htmlFor="signup-email">Email</Label>
+                  <Label htmlFor="signup-email">{t("auth.email")}</Label>
                   <Input
                     id="signup-email"
                     type="email"
@@ -323,7 +323,7 @@ export default function AuthPage() {
                 </div>
 
                 <div>
-                  <Label htmlFor="signup-password">Mot de passe</Label>
+                  <Label htmlFor="signup-password">{t("auth.password")}</Label>
                   <Input
                     id="signup-password"
                     type="password"
@@ -339,7 +339,7 @@ export default function AuthPage() {
 
                 <div>
                   <Label htmlFor="confirm-password">
-                    Confirmer le mot de passe
+                    {t("auth.confirmPassword")}
                   </Label>
                   <Input
                     id="confirm-password"
@@ -365,10 +365,10 @@ export default function AuthPage() {
                   {loading || uploading ? (
                     <div className="flex items-center gap-2">
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      {uploading ? "Upload en cours..." : "Création..."}
+                      {uploading ? t("common.loading") : t("common.loading")}
                     </div>
                   ) : (
-                    "Créer mon compte"
+                    t("auth.createAccount")
                   )}
                 </Button>
               </form>
@@ -383,8 +383,8 @@ export default function AuthPage() {
                 className="text-sm text-gray-700 hover:text-black hover:underline transition-colors duration-300 font-medium"
               >
                 {mode === "signin"
-                  ? "Pas encore de compte ? Créer un compte"
-                  : "Déjà un compte ? Se connecter"}
+                  ? `${t("auth.noAccount")} ${t("auth.signUpNow")}`
+                  : `${t("auth.haveAccount")} ${t("auth.signInNow")}`}
               </button>
             </div>
           </div>

@@ -16,6 +16,7 @@ import {
   Images,
   Type,
 } from "lucide-react";
+import { useLanguage } from "../language_context";
 
 type SortCriteria = "name" | "createdAt" | "updatedAt" | "user" | "imageCount";
 type SortOrder = "asc" | "desc";
@@ -25,23 +26,32 @@ export default function GallerySection() {
   const [loading, setLoading] = useState(true);
   const [sortCriteria, setSortCriteria] = useState<SortCriteria>("createdAt");
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
+  const { t } = useLanguage();
 
   const sortOptions: SelectOption<SortCriteria>[] = [
-    { value: "name", label: "Nom", icon: <Type className="w-4 h-4" /> },
+    {
+      value: "name",
+      label: t("gallery.sortOptions.name"),
+      icon: <Type className="w-4 h-4" />,
+    },
     {
       value: "createdAt",
-      label: "Date de création",
+      label: t("gallery.sortOptions.createdAt"),
       icon: <Calendar className="w-4 h-4" />,
     },
     {
       value: "updatedAt",
-      label: "Dernière mise à jour",
+      label: t("gallery.sortOptions.updatedAt"),
       icon: <Clock className="w-4 h-4" />,
     },
-    { value: "user", label: "Utilisateur", icon: <User className="w-4 h-4" /> },
+    {
+      value: "user",
+      label: t("gallery.sortOptions.user"),
+      icon: <User className="w-4 h-4" />,
+    },
     {
       value: "imageCount",
-      label: "Nombre d'images",
+      label: t("gallery.sortOptions.imageCount"),
       icon: <Images className="w-4 h-4" />,
     },
   ];
@@ -135,9 +145,13 @@ export default function GallerySection() {
     const isAlphabetic = sortCriteria === "name" || sortCriteria === "user";
 
     if (isAlphabetic) {
-      return sortOrder === "asc" ? "A → Z" : "Z → A";
+      return sortOrder === "asc"
+        ? t("gallery.sortOrder.aToZ")
+        : t("gallery.sortOrder.zToA");
     } else {
-      return sortOrder === "asc" ? "Croissant" : "Décroissant";
+      return sortOrder === "asc"
+        ? t("gallery.sortOrder.ascending")
+        : t("gallery.sortOrder.descending");
     }
   };
 
@@ -146,7 +160,9 @@ export default function GallerySection() {
       <div className="flex justify-center">
         <div className="w-full max-w-7xl px-6">
           <AnimateOnScroll>
-            <h2 className="text-5xl text-center font-bold mb-10">Galerie</h2>
+            <h2 className="text-5xl text-center font-bold mb-10">
+              {t("gallery.title")}
+            </h2>
           </AnimateOnScroll>
 
           {/* Filtres de tri */}
@@ -156,7 +172,7 @@ export default function GallerySection() {
                 options={sortOptions}
                 value={sortCriteria}
                 onChange={setSortCriteria}
-                label="Trier par:"
+                label={t("gallery.sortBy")}
               />
 
               <button

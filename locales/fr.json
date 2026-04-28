@@ -1,0 +1,207 @@
+{
+  "common": {
+    "home": "Accueil",
+    "gallery": "Galerie",
+    "about": "A propos",
+    "contact": "Contact",
+    "login": "Se connecter",
+    "logout": "Se déconnecter",
+    "guest": "Invité",
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "create": "Créer",
+    "back": "Retour",
+    "confirm": "Confirmer",
+    "email": "Email",
+    "password": "Mot de passe",
+    "phone": "Téléphone",
+    "legal": "Mentions légales",
+    "privacy": "Politique de confidentialité",
+    "networks": "Réseaux"
+  },
+  "navbar": {
+    "home": "Accueil",
+    "gallery": "Galerie",
+    "about": "A propos",
+    "contact": "Contact",
+    "logout": "Se déconnecter",
+    "login": "Se connecter",
+    "guest": "Invité"
+  },
+  "hero": {
+    "title": "MyGallery",
+    "guestSubtitle": "Découvrez les œuvres partagées par notre communauté",
+    "userSubtitle": "Bienvenue {name} !",
+    "guestDescription": "Explorez les magnifiques albums créés par nos utilisateurs. Pour partager vos propres souvenirs et créer vos albums, connectez-vous ou créez un compte gratuit !",
+    "userDescription": "Organisez vos plus beaux souvenirs, créez vos albums et partagez-les avec vos proches. Votre galerie personnelle vous attend !",
+    "discoverGallery": "Découvrir la galerie",
+    "unlimitedAlbums": "Albums illimités",
+    "easySharing": "Partage facile",
+    "modernInterface": "Interface moderne"
+  },
+  "about": {
+    "title": "A propos de MyGallery",
+    "subtitle": "Un espace convivial où vos souvenirs prennent vie et se partagent",
+    "description1": "Bienvenue sur {appName}, votre espace personnel pour organiser et partager ce qui compte vraiment. Ici, chaque photo raconte une histoire, chaque album capture un moment précieux. Que ce soit pour revivre vos aventures, partager vos plus beaux instants avec vos proches, ou simplement garder une trace de vos souvenirs, vous êtes au bon endroit.",
+    "description2": "Notre philosophie ? Allier simplicité et professionnalisme. Vous gardez un contrôle total sur vos créations tout en profitant d'une interface moderne et intuitive. Créez, organisez, partagez... en toute liberté et en toute sécurité.",
+    "techTitle": "Technologies utilisées",
+    "techDescription": "MyGallery est développé avec les technologies web les plus modernes",
+    "features": {
+      "creativity": {
+        "title": "Créativité sans limites",
+        "description": "Créez autant d'albums que vous le souhaitez et donnez vie à tous vos projets photos"
+      },
+      "sharing": {
+        "title": "Partagez vos émotions",
+        "description": "Partagez vos albums avec vos amis, votre famille et découvrez leurs créations"
+      },
+      "control": {
+        "title": "Vous êtes maître à bord",
+        "description": "Vos albums, vos règles : vous seul décidez de ce que vous partagez et de ce que vous gardez"
+      },
+      "design": {
+        "title": "Design qui inspire",
+        "description": "Une interface élégante et moderne qui sublime vos photos"
+      },
+      "simplicity": {
+        "title": "Simplicité avant tout",
+        "description": "Uploadez, organisez et partagez en quelques clics seulement"
+      }
+    }
+  },
+  "gallery": {
+    "title": "Galerie",
+    "sortBy": "Trier par:",
+    "sortOptions": {
+      "name": "Nom",
+      "createdAt": "Date de création",
+      "updatedAt": "Dernière mise à jour",
+      "user": "Utilisateur",
+      "imageCount": "Nombre d'images"
+    },
+    "sortOrder": {
+      "ascending": "Croissant",
+      "descending": "Décroissant",
+      "aToZ": "A → Z",
+      "zToA": "Z → A"
+    },
+    "photos": "{count} photo(s)",
+    "addAlbum": "Ajouter un album",
+    "noAlbums": "Aucun album trouvé"
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Pour toute demande de renseignements, projets ou collaborations, n'hésitez pas à me contacter directement par email.",
+    "responseTime": "Réponse généralement sous 24h.",
+    "passionatePhotographer": "Passionné de photographie",
+    "availableForProjects": "Disponible pour projets",
+    "simpleContact": "Contact simple et direct"
+  },
+  "footer": {
+    "description": "Studio de photographie & gestion d'images",
+    "fullDescription": "Nous aidons les créateurs et les entreprises à présenter leurs images avec élégance. Solutions de galerie, gestion d'albums et intégration professionnelle.",
+    "navigation": "Navigation",
+    "contact": "Contact",
+    "copyright": "© {year} MyGallery. Tous droits réservés.",
+    "madeWith": "Réalisé avec passion",
+    "by": "par"
+  },
+  "auth": {
+    "signIn": "Connexion",
+    "signUp": "Inscription",
+    "email": "Email",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "firstname": "Prénom",
+    "surname": "Nom",
+    "profileImage": "Photo de profil",
+    "optionalImage": "Optionnel - Cliquez pour ajouter",
+    "createAccount": "Créer un compte",
+    "login": "Se connecter",
+    "noAccount": "Pas encore de compte ?",
+    "haveAccount": "Déjà un compte ?",
+    "signUpNow": "S'inscrire",
+    "signInNow": "Se connecter",
+    "welcomeBack": "Content de vous revoir !",
+    "joinUs": "Rejoignez notre communauté !",
+    "signInDescription": "Connectez-vous à votre espace personnel pour retrouver vos albums et partager vos souvenirs.",
+    "signUpDescription": "Créez un compte gratuit pour organiser vos photos en albums et les partager avec vos proches.",
+    "errors": {
+      "invalidCredentials": "Email ou mot de passe incorrect.",
+      "passwordMismatch": "Les mots de passe ne correspondent pas",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 6 caractères",
+      "uploadError": "Erreur lors de l'upload de l'image",
+      "signupError": "Erreur lors de la création du compte",
+      "fileMustBeImage": "Le fichier doit être une image"
+    },
+    "success": {
+      "loginSuccess": "Connexion réussie !",
+      "signupSuccess": "Compte créé avec succès !"
+    }
+  },
+  "profile": {
+    "title": "Mon Profil",
+    "personalInfo": "Gérez vos informations personnelles",
+    "firstname": "Prénom",
+    "surname": "Nom",
+    "email": "Email",
+    "emailReadonly": "L'email ne peut pas être modifié",
+    "role": "Rôle",
+    "roles": {
+      "admin": "Administrateur",
+      "user": "Utilisateur",
+      "guest": "Invité"
+    },
+    "profileImage": "Photo de profil",
+    "changeImage": "Changer la photo",
+    "saveChanges": "Enregistrer les modifications",
+    "saving": "Enregistrement...",
+    "uploading": "Upload...",
+    "cancel": "Annuler",
+    "back": "Retour",
+    "confirmSave": "Confirmer les modifications",
+    "confirmSaveDescription": "Êtes-vous sûr de vouloir enregistrer ces modifications ?",
+    "confirmCancel": "Annuler les modifications",
+    "confirmCancelDescription": "Vous avez des modifications non enregistrées. Voulez-vous vraiment quitter sans sauvegarder ?",
+    "continueEditing": "Continuer l'édition",
+    "quitWithoutSaving": "Quitter sans sauvegarder",
+    "success": {
+      "profileUpdated": "Profil mis à jour avec succès !"
+    },
+    "errors": {
+      "updateError": "Erreur lors de la mise à jour du profil",
+      "uploadError": "Erreur lors de l'upload de l'image",
+      "fileMustBeImage": "Le fichier doit être une image"
+    }
+  },
+  "album": {
+    "createAlbum": "Créer un album",
+    "albumName": "Nom de l'album",
+    "albumDescription": "Description",
+    "create": "Créer",
+    "addImage": "Ajouter une image",
+    "deleteAlbum": "Supprimer l'album",
+    "confirmDelete": "Confirmer la suppression",
+    "deleteDescription": "Êtes-vous sûr de vouloir supprimer l'album \"{name}\" ? Cette action est irréversible.",
+    "photos": "{count} photo(s)",
+    "noImages": "Aucune image dans cet album",
+    "back": "Retour",
+    "success": {
+      "albumCreated": "Album créé avec succès !",
+      "albumDeleted": "Album supprimé avec succès !",
+      "imageAdded": "Image ajoutée avec succès !"
+    },
+    "errors": {
+      "createError": "Erreur lors de la création de l'album",
+      "deleteError": "Erreur lors de la suppression de l'album",
+      "addImageError": "Erreur lors de l'ajout de l'image"
+    }
+  },
+  "language": {
+    "french": "Français",
+    "english": "English"
+  }
+}

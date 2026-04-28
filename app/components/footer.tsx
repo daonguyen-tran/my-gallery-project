@@ -1,3 +1,5 @@
+"use client";
+
 import { Camera, Github, Instagram, Mail } from "lucide-react";
 import Link from "next/link";
 import {
@@ -6,8 +8,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useLanguage } from "./language_context";
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-black text-gray-300 py-12 mt-20">
       <div className="max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -20,52 +25,50 @@ export default function Footer() {
                 MyGallery
               </span>
               <div className="text-xs text-gray-400">
-                Studio de photographie & gestion d'images
+                {t("footer.description")}
               </div>
             </div>
           </div>
 
           <p className="text-gray-400 mt-4 max-w-sm text-center md:text-left">
-            Nous aidons les créateurs et les entreprises à présenter leurs
-            images avec élégance. Solutions de galerie, gestion d'albums et
-            intégration professionnelle.
+            {t("footer.fullDescription")}
           </p>
         </div>
 
         {/* Column: Navigation */}
         <div className="flex flex-col items-center md:items-start">
           <h3 className="text-white font-medium text-lg mb-3 text-center md:text-left">
-            Navigation
+            {t("footer.navigation")}
           </h3>
           <ul className="space-y-2 text-gray-400 text-center md:text-left">
             <li>
               <a href="/" className="hover:text-white transition">
-                Accueil
+                {t("navbar.home")}
               </a>
             </li>
             <li>
               <a href="/#gallery" className="hover:text-white transition">
-                Galerie
+                {t("navbar.gallery")}
               </a>
             </li>
             <li>
               <a href="/#about" className="hover:text-white transition">
-                À propos
+                {t("navbar.about")}
               </a>
             </li>
             <li>
               <a href="/#contact" className="hover:text-white transition">
-                Contact
+                {t("navbar.contact")}
               </a>
             </li>
             <li>
               <a href="/legal" className="hover:text-white transition">
-                Mentions légales
+                {t("common.legal")}
               </a>
             </li>
             <li>
               <a href="/privacy" className="hover:text-white transition">
-                Politique de confidentialité
+                {t("common.privacy")}
               </a>
             </li>
           </ul>
@@ -73,9 +76,11 @@ export default function Footer() {
 
         {/* Column: Contact + Social */}
         <div className="flex flex-col items-center md:items-start">
-          <h3 className="text-white font-medium text-lg mb-3">Contact</h3>
+          <h3 className="text-white font-medium text-lg mb-3">
+            {t("footer.contact")}
+          </h3>
           <p className="text-gray-400">
-            Email&nbsp;:{" "}
+            {t("common.email")}&nbsp;:{" "}
             <a
               href="mailto:daonguyentr.pro@gmail.com"
               className="text-white hover:underline"
@@ -84,14 +89,16 @@ export default function Footer() {
             </a>
           </p>
           <p className="text-gray-400 mt-1">
-            Téléphone&nbsp;:{" "}
+            {t("common.phone")}&nbsp;:{" "}
             <a href="tel:+33000000000" className="text-white hover:underline">
               +33 0 00 00 00 00
             </a>
           </p>
 
           <div className="mt-4">
-            <h4 className="text-white font-medium mb-2">Réseaux</h4>
+            <h4 className="text-white font-medium mb-2">
+              {t("common.networks")}
+            </h4>
             <TooltipProvider delayDuration={80}>
               <div className="flex gap-4 justify-center md:justify-start">
                 <Tooltip>
@@ -131,18 +138,19 @@ export default function Footer() {
       <div className="border-t border-gray-800 mt-10 pt-6 text-center text-gray-500 text-sm">
         <div className="max-w-6xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-3">
           <div>
-            © {new Date().getFullYear()} MyGallery Studio - Tous droits
-            réservés.
+            {t("footer.copyright", {
+              year: new Date().getFullYear().toString(),
+            })}
           </div>
           <div className="space-x-4">
             <a href="/legal" className="hover:text-white transition">
-              Mentions légales
+              {t("common.legal")}
             </a>
             <a href="/privacy" className="hover:text-white transition">
-              Politique de confidentialité
+              {t("common.privacy")}
             </a>
             <a href="/contact" className="hover:text-white transition">
-              Contact
+              {t("navbar.contact")}
             </a>
           </div>
         </div>

@@ -10,16 +10,19 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useLanguage } from "./language_context";
+import LanguageSwitcher from "./language_switcher";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { data: session, status } = useSession();
+  const { t } = useLanguage();
 
   const navItems = [
-    { label: "Accueil", href: "/" },
-    { label: "Galerie", href: "/#gallery" },
-    { label: "A propos", href: "/#about" },
-    { label: "Contact", href: "/#contact" },
+    { label: t("navbar.home"), href: "/" },
+    { label: t("navbar.gallery"), href: "/#gallery" },
+    { label: t("navbar.about"), href: "/#about" },
+    { label: t("navbar.contact"), href: "/#contact" },
   ];
 
   const getRoleBadge = (role: string) => {
@@ -43,7 +46,7 @@ export default function Navbar() {
         </Link>
 
         {/* Center: Navigation links (desktop) */}
-        <div className="hidden md:flex gap-8 text-sm font-medium">
+        <div className="hidden md:flex gap-10 text-md font-medium">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -62,6 +65,7 @@ export default function Navbar() {
 
         {/* Right: Profile section */}
         <div className="hidden md:flex items-center gap-3 absolute right-6">
+          <LanguageSwitcher />
           {status === "loading" ? (
             <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse" />
           ) : session?.user ? (
@@ -118,7 +122,7 @@ export default function Navbar() {
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Se déconnecter</p>
+                    <p>{t("navbar.logout")}</p>
                   </TooltipContent>
                 </Tooltip>
               </div>
@@ -126,14 +130,14 @@ export default function Navbar() {
           ) : (
             <div className="flex items-center gap-3">
               <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">
-                Invité
+                {t("navbar.guest")}
               </span>
               <Link
                 href="/auth"
                 className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-gray-900 to-black text-white rounded-lg hover:from-black hover:to-gray-900 transition-all duration-300 text-sm font-medium cursor-pointer shadow-lg hover:shadow-xl"
               >
                 <LogIn className="w-4 h-4" />
-                Se connecter
+                {t("navbar.login")}
               </Link>
             </div>
           )}
@@ -193,13 +197,13 @@ export default function Navbar() {
                   className="flex items-center gap-2 text-red-600 hover:text-red-700 text-sm"
                 >
                   <LogOut className="w-4 h-4" />
-                  Se déconnecter
+                  {t("navbar.logout")}
                 </button>
               </div>
             ) : (
               <div className="space-y-3">
                 <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">
-                  Invité
+                  {t("navbar.guest")}
                 </span>
                 <Link
                   href="/auth"
@@ -207,7 +211,7 @@ export default function Navbar() {
                   onClick={() => setIsOpen(false)}
                 >
                   <LogIn className="w-4 h-4" />
-                  Se connecter
+                  {t("navbar.login")}
                 </Link>
               </div>
             )}

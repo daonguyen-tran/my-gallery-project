@@ -18,10 +18,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useLanguage } from "../components/language_context";
 
 export default function ProfilePage() {
   const { data: session, status, update } = useSession();
   const router = useRouter();
+  const { t } = useLanguage();
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
 
@@ -80,7 +82,7 @@ export default function ProfilePage() {
     const file = e.target.files?.[0];
     if (file) {
       if (!file.type.startsWith("image/")) {
-        toast.error("Le fichier doit être une image");
+        toast.error(t("profile.errors.fileMustBeImage"));
         return;
       }
       setProfileImage(file);
@@ -111,7 +113,7 @@ export default function ProfilePage() {
         });
 
         if (!uploadRes.ok) {
-          toast.error("Erreur lors de l'upload de l'image");
+          toast.error(t("profile.errors.uploadError"));
           setLoading(false);
           setUploading(false);
           return;
@@ -135,7 +137,7 @@ export default function ProfilePage() {
 
       if (!res.ok) {
         const data = await res.json();
-        toast.error(data.error || "Erreur lors de la mise à jour");
+        toast.error(data.error || t("profile.errors.updateError"));
         setLoading(false);
         return;
       }
@@ -150,7 +152,7 @@ export default function ProfilePage() {
         },
       });
 
-      toast.success("Profil mis à jour avec succès !");
+      toast.success(t("profile.success.profileUpdated"));
       setProfileImage(null);
       setLoading(false);
 
@@ -160,7 +162,7 @@ export default function ProfilePage() {
       }, 500);
     } catch (error) {
       console.error(error);
-      toast.error("Erreur lors de la mise à jour");
+      toast.error(t("profile.errors.updateError"));
       setLoading(false);
     }
   }
@@ -210,15 +212,15 @@ export default function ProfilePage() {
           className="inline-flex items-center gap-2 text-gray-700 hover:text-black mb-6 transition-all duration-300 font-medium"
         >
           <ArrowLeft className="w-4 h-4" />
-          Retour
+          {t("profile.back")}
         </Link>
 
         {/* Profile card */}
         <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 p-8 hover:shadow-3xl transition-shadow duration-300">
-          <h1 className="text-3xl font-bold mb-2 text-black">Mon Profil</h1>
-          <p className="text-gray-600 mb-8">
-            Gérez vos informations personnelles
-          </p>
+          <h1 className="text-3xl font-bold mb-2 text-black">
+            {t("profile.title")}
+          </h1>
+          <p className="text-gray-600 mb-8">{t("profile.personalInfo")}</p>
 
           <form className="space-y-6">
             {/* Profile Image */}
@@ -240,7 +242,7 @@ export default function ProfilePage() {
               <label htmlFor="profile-image-edit" className="cursor-pointer">
                 <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition">
                   <Upload className="w-4 h-4" />
-                  <span className="text-sm">Changer la photo</span>
+                  <span className="text-sm">{t("profile.changeImage")}</span>
                 </div>
                 <input
                   id="profile-image-edit"
@@ -255,7 +257,7 @@ export default function ProfilePage() {
             {/* Name fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="firstname">Prénom</Label>
+                <Label htmlFor="firstname">{t("profile.firstname")}</Label>
                 <Input
                   id="firstname"
                   type="text"
@@ -267,7 +269,7 @@ export default function ProfilePage() {
                 />
               </div>
               <div>
-                <Label htmlFor="surname">Nom</Label>
+                <Label htmlFor="surname">{t("profile.surname")}</Label>
                 <Input
                   id="surname"
                   type="text"
@@ -282,7 +284,7 @@ export default function ProfilePage() {
 
             {/* Email (readonly) */}
             <div>
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("profile.email")}</Label>
               <Input
                 id="email"
                 type="email"
@@ -291,13 +293,13 @@ export default function ProfilePage() {
                 className="mt-1 bg-gray-50"
               />
               <p className="text-xs text-gray-500 mt-1">
-                L'email ne peut pas être modifié
+                {t("profile.emailReadonly")}
               </p>
             </div>
 
             {/* Role display */}
             <div>
-              <Label>Rôle</Label>
+              <Label>{t("profile.role")}</Label>
               <div className="mt-1">
                 <span
                   className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${
@@ -309,10 +311,10 @@ export default function ProfilePage() {
                   }`}
                 >
                   {session.user.role === "ADMIN"
-                    ? "Administrateur"
+                    ? t("profile.roles.admin")
                     : session.user.role === "USER"
-                    ? "Utilisateur"
-                    : "Invité"}
+                    ? t("profile.roles.user")
+                    : t("profile.roles.guest")}
                 </span>
               </div>
             </div>
@@ -328,10 +330,10 @@ export default function ProfilePage() {
                 {loading || uploading ? (
                   <div className="flex items-center gap-2">
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    {uploading ? "Upload..." : "Enregistrement..."}
+                    {uploading ? t("profile.uploading") : t("profile.saving")}
                   </div>
                 ) : (
-                  "Enregistrer les modifications"
+                  t("profile.saveChanges")
                 )}
               </Button>
               <Button
@@ -341,7 +343,7 @@ export default function ProfilePage() {
                 disabled={loading || uploading}
                 className="flex-1 cursor-pointer border-2 border-gray-300 hover:border-black text-gray-700 hover:text-black hover:bg-gray-50 transition-all duration-300"
               >
-                Annuler
+                {t("profile.cancel")}
               </Button>
             </div>
           </form>
@@ -352,16 +354,16 @@ export default function ProfilePage() {
       <Dialog open={showSaveDialog} onOpenChange={setShowSaveDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Confirmer les modifications</DialogTitle>
+            <DialogTitle>{t("profile.confirmSave")}</DialogTitle>
             <DialogDescription>
-              Êtes-vous sûr de vouloir enregistrer ces modifications ?
+              {t("profile.confirmSaveDescription")}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowSaveDialog(false)}>
-              Annuler
+              {t("profile.cancel")}
             </Button>
-            <Button onClick={handleSave}>Confirmer</Button>
+            <Button onClick={handleSave}>{t("common.confirm")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -370,10 +372,9 @@ export default function ProfilePage() {
       <Dialog open={showCancelDialog} onOpenChange={setShowCancelDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Annuler les modifications</DialogTitle>
+            <DialogTitle>{t("profile.confirmCancel")}</DialogTitle>
             <DialogDescription>
-              Vous avez des modifications non enregistrées. Voulez-vous vraiment
-              quitter sans sauvegarder ?
+              {t("profile.confirmCancelDescription")}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -381,10 +382,10 @@ export default function ProfilePage() {
               variant="outline"
               onClick={() => setShowCancelDialog(false)}
             >
-              Continuer l'édition
+              {t("profile.continueEditing")}
             </Button>
             <Button variant="destructive" onClick={confirmCancel}>
-              Quitter sans sauvegarder
+              {t("profile.quitWithoutSaving")}
             </Button>
           </DialogFooter>
         </DialogContent>

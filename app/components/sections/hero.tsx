@@ -2,12 +2,32 @@
 
 import { Camera } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useMemo } from "react";
+import { useLanguage } from "../language_context";
 
 export default function HeroSection() {
   const { data: session } = useSession();
+  const { t } = useLanguage();
 
   const firstName = session?.user?.name?.split(" ")[0] || "";
   const isGuest = !session;
+
+  // Generate consistent particle positions to avoid hydration errors
+  const particles = useMemo(() => {
+    return Array.from({ length: 15 }, (_, i) => {
+      // Use the index to create deterministic "random" values
+      const seed = i * 7919; // Use a prime number for better distribution
+      const left = (seed * 13) % 100;
+      const delay = ((seed * 17) % 500) / 100;
+      const duration = 3 + ((seed * 19) % 400) / 100;
+
+      return {
+        left: `${left}%`,
+        animationDelay: `${delay}s`,
+        animationDuration: `${duration}s`,
+      };
+    });
+  }, []);
 
   return (
     <section
@@ -28,15 +48,11 @@ export default function HeroSection() {
 
       {/* Particules lumineuses animées */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
+        {particles.map((particle, i) => (
           <div
             key={i}
             className="absolute bottom-0 w-1 h-1 bg-white rounded-full animate-float-up"
-            style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`,
-            }}
+            style={particle}
           />
         ))}
       </div>
@@ -52,14 +68,12 @@ export default function HeroSection() {
 
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
           {isGuest
-            ? "Découvrez les œuvres partagées par notre communauté"
-            : `Bienvenue${firstName ? " " + firstName : ""} !`}
+            ? t("hero.guestSubtitle")
+            : t("hero.userSubtitle", { name: firstName ? firstName : "" })}
         </h2>
 
         <p className="text-lg md:text-xl opacity-90 mb-8 max-w-2xl mx-auto leading-relaxed">
-          {isGuest
-            ? "Explorez les magnifiques albums créés par nos utilisateurs. Pour partager vos propres souvenirs et créer vos albums, connectez-vous ou créez un compte gratuit !"
-            : "Organisez vos plus beaux souvenirs, créez vos albums et partagez-les avec vos proches. Votre galerie personnelle vous attend !"}
+          {isGuest ? t("hero.guestDescription") : t("hero.userDescription")}
         </p>
 
         {/*<div className="flex flex-wrap gap-4 justify-center mb-8">
@@ -89,7 +103,7 @@ export default function HeroSection() {
                         hover:scale-105
                     "
         >
-          Découvrir la galerie
+          {t("hero.discoverGallery")}
         </a>
       </div>
     </section>
