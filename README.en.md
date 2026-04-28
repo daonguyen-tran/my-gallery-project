@@ -388,15 +388,6 @@ npx prisma studio
 - Two upload flows coexist (/api/upload and /api/images)
 - Some API error messages are still French-only
 
-## Additional documentation
-
-- [AUTHENTICATION_README.md](AUTHENTICATION_README.md)
-- [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)
-- [SUPABASE_STORAGE_SETUP.md](SUPABASE_STORAGE_SETUP.md)
-- [SUPABASE_FIX.md](SUPABASE_FIX.md)
-- [CORRECTIFS_26_NOV.md](CORRECTIFS_26_NOV.md)
-- [RECAP.md](RECAP.md)
-
 ## Suggested roadmap
 
 - Unify uploads into one route and one storage bucket
